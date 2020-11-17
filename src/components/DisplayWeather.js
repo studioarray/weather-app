@@ -1,32 +1,49 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useColourFromTemp } from "../hooks/useColourFromTemp";
+import {
+  InfoWrapper,
+  AbsoluteCenter,
+  WeatherImage,
+  RangeSlider,
+} from "./Styles";
 
 export const DisplayWeather = ({ data }) => {
   const { title, consolidated_weather } = data;
   const weather = consolidated_weather[0];
   const [temp, setTemp] = useState(Math.round(weather.the_temp));
-  console.log(weather);
+  const colour = useColourFromTemp(temp);
+
+  useEffect(() => {
+    setBackgroundColour(colour);
+  }, [colour]);
+
   return (
     <>
-      <h1>{title}</h1>
-      <h2>{weather.weather_state_name}</h2>
-      <div>{temp}ºc</div>
+      <InfoWrapper>
+        <div>{title}</div>
+        <div>{weather.weather_state_name}</div>
+        <div>{temp}&#176;c</div>
+      </InfoWrapper>
       <TempSlider temp={temp} setTemp={setTemp} />
-      <img
-        src={`https://www.metaweather.com/static/img/weather/${weather.weather_state_abbr}.svg`}
-        alt={weather.weather_state_name}
-      />
+      <AbsoluteCenter>
+        <WeatherImage
+          src={`https://www.metaweather.com/static/img/weather/${weather.weather_state_abbr}.svg`}
+          alt={weather.weather_state_name}
+        />
+      </AbsoluteCenter>
     </>
   );
 };
 
-const TempSlider = ({ temp, setTemp }) => {
-  return (
-    <input
-      type="range"
-      min="-10"
-      max="30"
-      value={temp}
-      onChange={(e) => setTemp(e.target.value)}
-    />
-  );
-};
+const TempSlider = ({ temp, setTemp }) => (
+  <RangeSlider
+    type="range"
+    min="-20"
+    max="40"
+    value={temp}
+    onChange={(e) => setTemp(e.target.value)}
+  />
+);
+
+const setBackgroundColour = (colour) =>
+  document.documentElement.style.setProperty("--bg-colour", colour);
