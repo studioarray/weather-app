@@ -5,7 +5,7 @@ export const useWeatherApi = (coords) => {
   const { latitude, longitude } = coords;
   const [weatherData, setWeatherData] = useState();
   const { get, response } = useFetch(
-    `${process.env.REACT_APP_PROXY}https://www.metaweather.com`
+    `${process.env.REACT_APP_PROXY || ""}https://www.metaweather.com`
   );
 
   useEffect(() => {
