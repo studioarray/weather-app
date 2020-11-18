@@ -19,18 +19,10 @@ export const useWeatherApi = (coords) => {
           // Fetch weather
           const { woeid } = locationList[0];
           const weatherResponse = await get(`/api/location/${woeid}/`);
-          if (response.ok) {
-            setWeatherData(weatherResponse);
-          } else {
-            console.log(response);
-          }
-        } else {
-          console.log(response);
+          if (response.ok) setWeatherData(weatherResponse);
         }
       };
       fetchData();
-    } else {
-      console.log("no lat/long");
     }
   }, [get, response, latitude, longitude]);
 

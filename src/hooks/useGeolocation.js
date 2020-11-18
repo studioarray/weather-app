@@ -4,7 +4,6 @@ export const useGeolocation = () => {
   const [state, setState] = useState({ latitude: null, longitude: null });
 
   const successHandler = (position) => {
-    console.log(position);
     const { latitude, longitude } = position.coords;
     setState({ latitude, longitude });
   };
@@ -12,7 +11,6 @@ export const useGeolocation = () => {
   const errorHandler = (error) => console.error(error.message);
 
   useEffect(() => {
-    console.log("getting location");
     navigator.geolocation.getCurrentPosition(
       successHandler,
       errorHandler,
