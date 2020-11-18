@@ -72,6 +72,10 @@ export const RangeSlider = styled.input`
     background: var(--bg-colour);
     cursor: pointer;
   }
+
+  @media screen and (max-width: 440px) {
+    bottom: 140px;
+  }
 `;
 
 export const LargeType = styled.p`
